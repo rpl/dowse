@@ -4,4 +4,5 @@ log
 run
 doc/style.css
 doc/index.html
-
+tmp/
+modules/enabled/
