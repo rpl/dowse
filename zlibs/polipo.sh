@@ -55,7 +55,7 @@ polipo_start() {
     act "Preparing to launch polipo..."
     # if running, stop to restart
     polipo_stop $2
-    setuidgid $dowseuid polipo -c "$1"
+    setuidgid $dowseuid polipo -c "$1" -- pidFile="$2"
 }
 
 polipo_stop() {

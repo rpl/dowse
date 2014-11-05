@@ -12,6 +12,10 @@ cache deny all
 cache_mem 16 MB
 # cache_dir null /tmp
 # cache_dir aufs /dev/shm/dowse 64 16 64
+cache_log $DIR/log/squid_cache.log
+access_log /dev/null
+# access_log $DIR/log/squid_access.log squid
+
 maximum_object_size 16 MB
 maximum_object_size_in_memory 1 MB
 minimum_object_size 16 KB
@@ -90,7 +94,6 @@ never_direct allow all
 # header_access User-Agent deny all
 # header_access WWW-Authenticate deny all
 
-
 EOF
 
 }
@@ -100,6 +103,9 @@ squid_start() {
 
     # # populate the volatile cache
     # setuidgid $dowseuid squid3 -z -f "$1"
+
+    squid_stop $2
+
     # launch the squid
     setuidgid $dowseuid squid3 -f "$1"
 }

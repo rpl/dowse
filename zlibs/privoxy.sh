@@ -6,6 +6,8 @@ privoxy_conf() {
     cat <<EOF
 user-manual /usr/share/doc/privoxy/user-manual
 confdir /etc/privoxy
+logdir $DIR/log/privoxy.log
+
 listen-address  0.0.0.0:8118
 toggle  1
 enable-remote-toggle  0
@@ -33,6 +35,7 @@ filterfile default.filter
 actionsfile match-all.action # Actions that are applied to all sites and maybe overruled later on.
 actionsfile default.action   # Main actions file
 actionsfile user.action      # User customizations
+
 EOF
 
 }
@@ -41,11 +44,9 @@ EOF
 privoxy_start() {
     act "Preparing to launch privoxy..."
 
-    pid=`awk '/^pid-file/ { print $2 }' "$1"`
     # if running, stop to restart
-    privoxy_stop "$pid"
-
-    privoxy --user $dowseuid --pidfile "$pid" "$1"
+    privoxy_stop $2
+    privoxy --pidfile "$2" --user $dowseuid "$1"
 }
 
 # $1 arg is path to pid
