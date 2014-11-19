@@ -4,4 +4,4 @@ log
 run
 doc/style.css
 doc/index.html
-
+node_modules/
